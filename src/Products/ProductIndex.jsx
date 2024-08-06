@@ -1,15 +1,30 @@
 import { useState, useEffect } from 'react';
 import { Toaster, toast } from 'sonner';
 
+// import ProductAddModal
+import ProductAddModal from './ProductAddModal.jsx';
+
 const Products = () => {
     // get Products to display
     const [products, setProducts] = useState([]);
+
+    // handle individual variables
+    const [productId, setProductId] = useState();
+    const [productName, setProductName] = useState('');
+    const [price, setPrice] = useState();
+    const [stock, setStock] = useState();
+    const [unit, setUnit] = useState('');
+    const [categoryId, setCategoryId] = useState();
     
     // get Categories to display
     const [categories, setCategories] = useState([]);
 
     // set loading...
     const [loading, setLoading] = useState(true);
+
+    // Add Modal
+    const [showAddModal, setShowAddModal] = useState(false);
+    const makeAddModalAppear = () => setShowAddModal(!showAddModal);
 
     // Fetch Products
     const getProducts = async () => {
@@ -47,11 +62,74 @@ const Products = () => {
         return category ? category.categoryName : 'Unknown';
     };
 
+    // Cleanup variables to default
+    const setVariablesToDefault = () => {
+        productId('');
+        setProductName('');
+        setPrice('');
+        setStock('');
+        setUnit('');
+        setCategoryId('');
+    }
+
+    // Add Product
+    const saveProduct = async () => {
+        const dataToSend = {
+            "ProductName": productName,
+            "Price": price,
+            "Stock": stock,
+            "Unit": unit,
+            "CategoryId": categoryId,
+        }
+
+        const response = await fetch(
+            "http://localhost:5175/api/ProductApi/SaveProduct",
+            {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(dataToSend)
+            }
+        );
+
+        if (response.ok) {
+            await getProducts();
+            makeAddModalAppear();
+            setVariablesToDefault();
+            toast.success('Product saved successfully');
+        } else {
+            toast.error('Failed to save product');
+        }
+    }
+
     // if the browser is still loading data
     if (loading) return <center><h1>Loading</h1></center>
 
     return (
         <>
+            {/* Add Product */}
+            <ProductAddModal
+                showAddModal={showAddModal}
+                makeAddModalAppear={makeAddModalAppear}
+                productName={productName}
+                price={price}
+                stock={stock}
+                unit={unit}
+                categoryId={categoryId}
+                setProductName={setProductName}
+                setPrice={setPrice}
+                setStock={setStock}
+                setUnit={setUnit}
+                setCategoryId={setCategoryId}
+                saveProduct={saveProduct}
+            />
+
+            {/* Show Add Product Modal */}
+            <div className="add-client-btn-container">
+                <button className="action-btn add-client-btn" onClick={makeAddModalAppear}>Add New Product</button>
+            </div>
+
             {/* Display All Product Data */}
             <div className="content-container">
                 <div className="table-container">
