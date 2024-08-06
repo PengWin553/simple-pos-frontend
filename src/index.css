@@ -1,0 +1,278 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500&family=Nunito:ital,wght@0,200..1000;1,200..1000&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Sofia+Sans:ital,wght@0,1..1000;1,1..1000&display=swap');
+
+:root {
+  color: rgba(255, 255, 255, 0.87);
+  background-color: #242424;
+}
+
+*{
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  font-family: "Nunito", monospace, Arial, sans-serif;
+  font-size: 18px;
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+}
+
+main {
+  width: 100%;
+  max-width: 1000px;
+  margin: auto;
+  padding: 1em;
+}
+
+h1 {
+  text-align: center;
+}
+
+
+/* add posts form */
+
+form {
+  border: 1px solid black;
+  padding: 1em;
+  border-radius: 5px;
+  width: 100%;
+  margin: auto;
+  max-width: 400px;
+}
+
+form h2 {
+  text-align: center;
+  margin-top: 0;
+}
+
+.input-container {
+  display: flex;   
+  margin-bottom: 1em;
+}
+
+label, input, textarea {
+  display: block;
+  border-radius: 5px;
+  width: 100%;
+  font-size: 16px;
+  color: #747475;
+}
+
+label {
+  margin-right: 1em;
+  font-weight: bold;
+}
+
+textarea {
+  resize: vertical;
+  height: 150px;
+}
+
+.btn-submit {
+  font-size: 18px;
+  margin: auto;
+  display: block;
+  border-radius: 5px;
+  padding: 0.5em 1em;
+  cursor: pointer;
+  transition: all, 0.5s;
+}
+
+.btn-submit:hover, .btn-submit:focus {
+  transform: scale(1.1);
+   transition: all, 0.5s;
+}
+
+/* Posts */
+
+.posts-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1em;
+  margin-top: 2em;
+}
+
+.posts-container h2 {
+  text-align: center;
+  margin-top: 0;
+  grid-column: 1/-1;
+}
+
+.post-card {
+  border: 1px solid black;
+  border-radius: 5px;
+  padding: 0.5em;
+  position: relative;
+}
+
+.post-title {
+  margin-top: 0;
+}
+
+.post-body {
+  margin-bottom: 50px; 
+}
+
+.btn-delete {
+  position: absolute;
+  bottom: 10px;
+  left: 30%;
+  right: 30%;
+  font-size: 16px;
+  margin: auto;
+  display: block;
+  border-radius: 5px;
+  padding: 0.5em 1em;
+  cursor: pointer;
+  transition: all, 0.5s;
+}
+
+.btn-delete:hover, .btn-delete:focus {
+  transform: scale(1.1);
+   transition: all, 0.5s;
+}
+
+input{
+  padding: 5px;
+  padding-left: 15px;
+  border: 1px solid #bebdbd;
+  border-radius: 10px;
+  color: black;
+}
+
+.fixTableHead { 
+	overflow-y: auto; 
+	height: 500px;
+  width: 900px;
+}
+
+.fixTableHead thead th { 
+	position: sticky; 
+	top: 0; 
+}
+
+table { 
+	border-collapse: collapse;		 
+	width: 100%; 
+} 
+
+th, td { 
+  padding: 8px 15px; 
+} 
+
+th { 
+	background: #695cfe; 
+  color: white;
+}
+
+.add-client-btn-container{
+  padding-top: -0.5em;
+  padding-bottom: 0.7em;
+}
+
+.action-btn{
+  padding: 15px;
+  border: none;
+  border-radius: 15px;
+  background-color: white;
+}
+
+tr .action-btn{
+ color: white;
+}
+
+.row-btn{
+  padding-left: 30px;
+  padding-right: 30px;
+  padding-top: 8px;
+  padding-bottom: 8px;
+}
+
+.action-btn-row-container{
+  text-align: center;
+}
+
+.action-btn-container-display{
+  display: flex;
+  justify-content: space-around;
+}
+
+.add-client-btn{
+  color: white;
+  background-color:#238cc0;
+}
+
+.update-client-btn{
+  background-color:#f0af35;
+}
+
+.delete-client-btn{
+  background-color: #f64f4f;
+}
+
+.add-client-btn:hover{
+  color: white;
+  background-color:#1f79a7;
+}
+
+.update-client-btn:hover{
+  background-color:#dea232;
+}
+
+.delete-client-btn:hover{
+  background-color: #e44a4a;
+}
+
+.title{
+  padding: 15px;
+  text-align: center;
+  color: #707070;
+  font-weight: 600;
+}
+
+::-webkit-scrollbar {
+  width: 10px; /* the width of the vertical scrollbar */
+  height: 10px; /* the height of the horizontal scrollbar */
+  background: #f5cad1;
+
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(45deg, #732ca0, #8a85ef); /* the background color of the thumb */
+  border-radius: 5px;
+  height: 3%;
+}
+
+.modal-btn{
+  background-color: #238cc0;
+  color: white;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+.bold-color{
+  color: #707070;
+}
+
+.delete-modal-title{
+  text-align: center;
+  color: #f64f4f;
+}
+
+.delete-data-text{
+  font-size: 16px;
+  color: #707070;
+}
+
+.delete-label-styles{
+  font-size: 17px;
+  color: rgb(73, 72, 72);
+}
