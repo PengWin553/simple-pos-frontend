@@ -4,8 +4,8 @@ import { Toaster, toast } from 'sonner';
 // import CategoryAddModal
 import CategoryAddModal from './CategoryAddModal.jsx';
 
-// // import CategoryUpdateModal
-// import CategoryUpdateModal from './CategoryUpdateModal.jsx';
+// import CategoryUpdateModal
+import CategoryUpdateModal from './CategoryUpdateModal.jsx';
 
 // // import CategoryDeleteModal
 // import CategoryDeleteModal from './CategoryDeleteModal.jsx';
@@ -19,7 +19,7 @@ const Categories = () => {
     const [loading, setLoading] = useState(true);
 
     // Handle individual variables
-    const [categoryId, setCategoryId] = useState("");
+    const [categoryId, setCategoryId] = useState(0);
     const [categoryName, setCategoryName] = useState("");
 
     // Add Modal
@@ -33,6 +33,11 @@ const Categories = () => {
     // Delete Modal
     const [showDeleteModal, setShowDeleteModal] = useState(false);
     const makeDeleteModalAppear = () => setShowDeleteModal(!showDeleteModal);
+
+    const handleUpdateData = async (id, name) => {
+        setCategoryId(id);
+        setCategoryName(name);
+    }
 
     // Fetch Categories
     const getCategories = async () => {
@@ -85,35 +90,32 @@ const Categories = () => {
         }
     }
 
-    // // Update Client
-    // const updateClient = async () => {
-    //     const dataToSend = {
-    //         "clientName": clientName,
-    //         "residency": residency,
-    //     }
+    // Update Category
+    const updateCategory = async () => {
+        const dataToSend = {
+            "categoryName": categoryName,
+        }
 
-    //     const response = await fetch(
-    //         "http://localhost:5029/api/ClientApi/UpdateClient?Id=" + id,
-    //         {
-    //             method: "PUT",
-    //             headers: {
-    //                 "Content-Type": "application/json"
-    //             },
-    //             body: JSON.stringify(dataToSend)
-    //         }
-    //     );
+        const response = await fetch(
+            "http://localhost:5175/api/CategoryApi/UpdateCategory?Id=" + categoryId,
+            {
+                method: "PUT",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(dataToSend)
+            }
+        );
 
-    //     if (response.ok) {
-    //         await getClients();
-    //         makeUpdateModalAppear();
-    //         setClientName('');
-    //         setResidency('');
-    //         toast.success('Client updated successfully');
-    //     } else {
-    //         toast.error('Failed to save client');
-    //     }
-
-    // }
+        if (response.ok) {
+            await getCategories();
+            makeUpdateModalAppear();
+            setCategoryName('');
+            toast.success('Category updated successfully');
+        } else {
+            toast.error('Failed to update category');
+        }
+    }
 
     // // Delete Client
     // const deleteClient = async (id) => {
@@ -154,18 +156,16 @@ const Categories = () => {
                 saveCategory={saveCategory}
             />
 
-            {/* Update Client */}
-            {/* <ClientUpdateModal
+            {/* Update Category */}
+            <CategoryUpdateModal
                 showUpdateModal={showUpdateModal}
                 makeUpdateModalAppear={makeUpdateModalAppear}
-                id={id}
-                clientName={clientName}
-                residency={residency}
-                setResidency={setResidency}
-                setClientName={setClientName}
-                setId={setId}
-                updateClient={updateClient}
-            /> */}
+                categoryId={categoryId}
+                categoryName={categoryName}
+                setCategoryName={setCategoryName}
+                setCategoryId={setCategoryId}
+                updateCategory={updateCategory}
+            />
 
             {/* Delete Client */}
             {/* <ClientDeleteModal
@@ -200,8 +200,8 @@ const Categories = () => {
                                 <td>{c.categoryId}</td>
                                 <td>{c.categoryName}</td>
                                 <td className='action-btn-container-display'>
-                                    {/* <button className="action-btn row-btn update-client-btn" onClick={() => { getClient(c.id); makeUpdateModalAppear() }}>Update</button>
-                                    <button className="action-btn row-btn delete-client-btn" onClick={() => { getClient(c.id); makeDeleteModalAppear() }}>Delete</button> */}
+                                    <button className="action-btn row-btn update-client-btn" onClick={() => { handleUpdateData(c.categoryId, c.categoryName); makeUpdateModalAppear() }}>Update</button>
+                                    <button className="action-btn row-btn delete-client-btn" onClick={() => { getClient(c.id); makeDeleteModalAppear() }}>Delete</button>
                                 </td>
                             </tr>
                         )}
