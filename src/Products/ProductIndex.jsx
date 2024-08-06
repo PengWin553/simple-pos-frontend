@@ -1,43 +1,15 @@
 import { useState, useEffect } from 'react';
 import { Toaster, toast } from 'sonner';
 
-// // import ProductAddModal
-// import ProductAddModal from './ProductAddModal.jsx';
-
-// // import ProductUpdateModal
-// import ProductUpdateModal from './ProductUpdateModal.jsx';
-
-// // import ProductDeleteModal
-// import ProductDeleteModal from './ProductDeleteModal.jsx';
-
 const Products = () => {
-
     // get Products to display
     const [products, setProducts] = useState([]);
+    
+    // get Categories to display
+    const [categories, setCategories] = useState([]);
 
     // set loading...
     const [loading, setLoading] = useState(true);
-
-    // // Handle individual variables
-    // const [categoryId, setCategoryId] = useState(0);
-    // const [categoryName, setCategoryName] = useState("");
-
-    // // Add Modal
-    // const [showAddModal, setShowAddModal] = useState(false);
-    // const makeAddModalAppear = () => setShowAddModal(!showAddModal);
-
-    // // Update Modal
-    // const [showUpdateModal, setShowUpdateModal] = useState(false);
-    // const makeUpdateModalAppear = () => setShowUpdateModal(!showUpdateModal);
-
-    // // Delete Modal
-    // const [showDeleteModal, setShowDeleteModal] = useState(false);
-    // const makeDeleteModalAppear = () => setShowDeleteModal(!showDeleteModal);
-
-    // const handleSelectedData = async (id, name) => {
-    //     setCategoryId(id);
-    //     setCategoryName(name);
-    // }
 
     // Fetch Products
     const getProducts = async () => {
@@ -47,127 +19,40 @@ const Products = () => {
 
         const result = await response.json();
         setProducts(result);
-        setLoading(false);
     }
 
-    // // Add Category
-    // const saveCategory = async () => {
-    //     const dataToSend = {
-    //         "categoryName": categoryName,
-    //     }
+    // Fetch Categories
+    const getCategories = async () => {
+        const response = await fetch(
+            "http://localhost:5175/api/CategoryApi/GetCategories"
+        );
 
-    //     const response = await fetch(
-    //         "http://localhost:5175/api/CategoryApi/SaveCategory",
-    //         {
-    //             method: "POST",
-    //             headers: {
-    //                 "Content-Type": "application/json"
-    //             },
-    //             body: JSON.stringify(dataToSend)
-    //         }
-    //     );
-
-    //     if (response.ok) {
-    //         await getCategories();
-    //         makeAddModalAppear();
-    //         setCategoryName('');
-    //         toast.success('Category saved successfully');
-    //     } else {
-    //         toast.error('Failed to save category');
-    //     }
-    // }
-
-    // // Update Category
-    // const updateCategory = async () => {
-    //     const dataToSend = {
-    //         "categoryName": categoryName,
-    //     }
-
-    //     const response = await fetch(
-    //         "http://localhost:5175/api/CategoryApi/UpdateCategory?Id=" + categoryId,
-    //         {
-    //             method: "PUT",
-    //             headers: {
-    //                 "Content-Type": "application/json"
-    //             },
-    //             body: JSON.stringify(dataToSend)
-    //         }
-    //     );
-
-    //     if (response.ok) {
-    //         await getCategories();
-    //         makeUpdateModalAppear();
-    //         setCategoryName('');
-    //         toast.success('Category updated successfully');
-    //     } else {
-    //         toast.error('Failed to update category');
-    //     }
-    // }
-
-    // // Delete Category
-    // const deleteCategory = async (id) => {
-    //     const response = await fetch(
-    //         "http://localhost:5175/api/CategoryApi/DeleteCategory?Id=" + categoryId,
-    //         {
-    //             method: "DELETE",
-    //         }
-    //     );
-
-    //     if (response.ok) {
-    //         await getCategories();
-    //         makeDeleteModalAppear();
-    //         setCategoryName('');
-    //         toast.success('Category deleted successfully');
-    //     } else {
-    //         toast.error('Failed to delete category');
-    //     }
-    // }
+        const result = await response.json();
+        setCategories(result);
+    }
 
     // update browser in case of database updates
     useEffect(() => {
-        getProducts();
+        const fetchData = async () => {
+            await getProducts();
+            await getCategories();
+            setLoading(false);
+        };
+        fetchData();
     }, []);
+
+    // Helper function to get category name
+    const getCategoryName = (categoryId) => {
+        const category = categories.find(c => c.categoryId === categoryId);
+        return category ? category.categoryName : 'Unknown';
+    };
 
     // if the browser is still loading data
     if (loading) return <center><h1>Loading</h1></center>
 
     return (
         <>
-            {/* Add Category */}
-            {/* <CategoryAddModal
-                showAddModal={showAddModal}
-                makeAddModalAppear={makeAddModalAppear}
-                categoryName={categoryName}
-                setCategoryName={setCategoryName}
-                saveCategory={saveCategory}
-            /> */}
-
-            {/* Update Category */}
-            {/* <CategoryUpdateModal
-                showUpdateModal={showUpdateModal}
-                makeUpdateModalAppear={makeUpdateModalAppear}
-                categoryId={categoryId}
-                categoryName={categoryName}
-                setCategoryName={setCategoryName}
-                setCategoryId={setCategoryId}
-                updateCategory={updateCategory}
-            /> */}
-
-            {/* Delete Category */}
-            {/* <CategoryDeleteModal
-                showDeleteModal={showDeleteModal}
-                makeDeleteModalAppear={makeDeleteModalAppear}
-                categoryId={categoryId}
-                categoryName={categoryName}
-                deleteCategory={deleteCategory}
-            /> */}
-           
-            {/* Show Add Category Modal */}
-            <div className="add-client-btn-container">
-                {/* <button className="action-btn add-client-btn" onClick={makeAddModalAppear}>Add New Product</button> */}
-            </div>
-
-            {/* Display All Category Data */}
+            {/* Display All Product Data */}
             <div className="content-container">
                 <div className="table-container">
                     <div className="fixTableHead">
@@ -191,10 +76,9 @@ const Products = () => {
                                         <td>{p.price}</td>
                                         <td>{p.stock}</td>
                                         <td>{p.unit}</td>
-                                        <td>{p.categoryId}</td>
+                                        <td>{getCategoryName(p.categoryId)}</td>
                                         <td className='action-btn-container-display'>
-                                            {/* <button className="action-btn row-btn update-client-btn" onClick={() => { handleSelectedData(c.categoryId, c.categoryName); makeUpdateModalAppear() }}>Update</button> */}
-                                            {/* <button className="action-btn row-btn delete-client-btn" onClick={() => { handleSelectedData(c.categoryId, c.categoryName); makeDeleteModalAppear() }}>Delete</button> */}
+                                            {/* Action buttons */}
                                         </td>
                                     </tr>
                                 )}
