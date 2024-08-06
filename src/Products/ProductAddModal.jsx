@@ -13,11 +13,8 @@ const ProductAddModal = ({
     setStock,
     setUnit,
     setCategoryId,
+    categories,
     saveProduct
-
-    // categoryName,
-    // setCategoryName,
-    // saveCategory
 }) => {
 
     return(
@@ -39,7 +36,7 @@ const ProductAddModal = ({
                 <label htmlFor="price">Price:</label>
                 <input type="text"
                     value={price}
-                    onChange={(e) => setPrice(e.target.value)}
+                    onChange={(e) => setPrice(parseFloat(e.target.value))}
                     id="price"
                     placeholder='Enter price'
                 />
@@ -47,7 +44,7 @@ const ProductAddModal = ({
                 <label htmlFor="stock">Stock:</label>
                 <input type="text"
                     value={stock}
-                    onChange={(e) => setStock(e.target.value)}
+                    onChange={(e) => setStock(parseInt(e.target.value))}
                     id="stock"
                     placeholder='Enter stock'
                 />
@@ -61,18 +58,32 @@ const ProductAddModal = ({
                 />
 
                 <label htmlFor="category">Category:</label>
-                <input type="text"
+               
+                <select
+                    // className="form-control"
                     value={categoryId}
-                    onChange={(e) => setCategoryId(e.target.value)}
+                    onChange={(e) => {
+                        setCategoryId(parseInt(e.target.value));
+                    }}
+
                     id="category"
-                    placeholder='Enter category id'
-                />
+                >
+                    <option value="">Select category</option>
+                    {categories.map((c) => (
+                        <option key={c.categoryId} value={c.categoryId}>
+                            {c.categoryName}
+                        </option>
+                    ))}
+                </select>
+                
             </Modal.Body>
             <Modal.Footer className="modal-footer">
                 <button onClick={saveProduct} className="action-btn modal-btn">Save Product</button>
             </Modal.Footer>
             </Modal>
+
         </>
+
     );
 } 
 

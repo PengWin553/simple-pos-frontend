@@ -63,7 +63,7 @@ form h2 {
   margin-bottom: 1em;
 }
 
-label, input, textarea {
+label, input, textarea, select {
   display: block;
   border-radius: 5px;
   width: 100%;
@@ -145,7 +145,7 @@ textarea {
    transition: all, 0.5s;
 }
 
-input{
+input, select{
   padding: 5px;
   padding-left: 15px;
   border: 1px solid #bebdbd;

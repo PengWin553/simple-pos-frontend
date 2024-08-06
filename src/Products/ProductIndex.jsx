@@ -9,12 +9,12 @@ const Products = () => {
     const [products, setProducts] = useState([]);
 
     // handle individual variables
-    const [productId, setProductId] = useState();
+    const [productId, setProductId] = useState('');
     const [productName, setProductName] = useState('');
-    const [price, setPrice] = useState();
-    const [stock, setStock] = useState();
+    const [price, setPrice] = useState('');
+    const [stock, setStock] = useState('');
     const [unit, setUnit] = useState('');
-    const [categoryId, setCategoryId] = useState();
+    const [categoryId, setCategoryId] = useState('');
     
     // get Categories to display
     const [categories, setCategories] = useState([]);
@@ -64,7 +64,7 @@ const Products = () => {
 
     // Cleanup variables to default
     const setVariablesToDefault = () => {
-        productId('');
+        setProductId('');
         setProductName('');
         setPrice('');
         setStock('');
@@ -122,6 +122,7 @@ const Products = () => {
                 setStock={setStock}
                 setUnit={setUnit}
                 setCategoryId={setCategoryId}
+                categories={categories}
                 saveProduct={saveProduct}
             />
 
@@ -165,7 +166,7 @@ const Products = () => {
                     </div>
                 </div>
             </div>
-           
+            
             <Toaster expand={true} richColors position='bottom-right' className='mr-8'></Toaster>
         </>
     );
