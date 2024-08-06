@@ -7,8 +7,8 @@ import CategoryAddModal from './CategoryAddModal.jsx';
 // import CategoryUpdateModal
 import CategoryUpdateModal from './CategoryUpdateModal.jsx';
 
-// // import CategoryDeleteModal
-// import CategoryDeleteModal from './CategoryDeleteModal.jsx';
+// import CategoryDeleteModal
+import CategoryDeleteModal from './CategoryDeleteModal.jsx';
 
 const Categories = () => {
 
@@ -34,7 +34,7 @@ const Categories = () => {
     const [showDeleteModal, setShowDeleteModal] = useState(false);
     const makeDeleteModalAppear = () => setShowDeleteModal(!showDeleteModal);
 
-    const handleUpdateData = async (id, name) => {
+    const handleSelectedData = async (id, name) => {
         setCategoryId(id);
         setCategoryName(name);
     }
@@ -48,20 +48,6 @@ const Categories = () => {
         setCategories(result);
         setLoading(false);
     }
-
-    // // Fetch Client
-    // const getClient = async (id) => {
-    //     const response = await fetch(
-    //         "http://localhost:5029/api/ClientApi/GetClient?id=" + id,
-    //     );
-
-    //     const result = await response.json();
-    //     setId(result.id);
-    //     setClientName(result.clientName);
-    //     setResidency(result.residency);
-
-    //     setLoading(false);
-    // }
 
     // Add Category
     const saveCategory = async () => {
@@ -117,25 +103,24 @@ const Categories = () => {
         }
     }
 
-    // // Delete Client
-    // const deleteClient = async (id) => {
-    //     const response = await fetch(
-    //         "http://localhost:5029/api/ClientApi/DeleteClient?Id=" + id,
-    //         {
-    //             method: "DELETE",
-    //         }
-    //     );
+    // Delete Category
+    const deleteCategory = async (id) => {
+        const response = await fetch(
+            "http://localhost:5175/api/CategoryApi/DeleteCategory?Id=" + categoryId,
+            {
+                method: "DELETE",
+            }
+        );
 
-    //     if (response.ok) {
-    //         await getClients();
-    //         makeDeleteModalAppear();
-    //         setClientName('');
-    //         setResidency('');
-    //         toast.success('Client deleted successfully');
-    //     } else {
-    //         toast.error('Failed to delete client');
-    //     }
-    // }
+        if (response.ok) {
+            await getCategories();
+            makeDeleteModalAppear();
+            setCategoryName('');
+            toast.success('Category deleted successfully');
+        } else {
+            toast.error('Failed to delete category');
+        }
+    }
 
     // update browser in case of database updates
     useEffect(() => {
@@ -167,15 +152,14 @@ const Categories = () => {
                 updateCategory={updateCategory}
             />
 
-            {/* Delete Client */}
-            {/* <ClientDeleteModal
+            {/* Delete Category */}
+            <CategoryDeleteModal
                 showDeleteModal={showDeleteModal}
                 makeDeleteModalAppear={makeDeleteModalAppear}
-                id={id}
-                clientName={clientName}
-                residency={residency}
-                deleteClient={deleteClient}
-            /> */}
+                categoryId={categoryId}
+                categoryName={categoryName}
+                deleteCategory={deleteCategory}
+            />
            
             <h3 className="title">Simple ReactJS POS With C# API</h3>
 
@@ -184,7 +168,7 @@ const Categories = () => {
                 <button className="action-btn add-client-btn" onClick={makeAddModalAppear}>Add New Category</button>
             </div>
 
-            {/* Display All Client Data */}
+            {/* Display All Category Data */}
             <div className="fixTableHead">
                 <table>
                     <thead>
@@ -200,8 +184,8 @@ const Categories = () => {
                                 <td>{c.categoryId}</td>
                                 <td>{c.categoryName}</td>
                                 <td className='action-btn-container-display'>
-                                    <button className="action-btn row-btn update-client-btn" onClick={() => { handleUpdateData(c.categoryId, c.categoryName); makeUpdateModalAppear() }}>Update</button>
-                                    <button className="action-btn row-btn delete-client-btn" onClick={() => { getClient(c.id); makeDeleteModalAppear() }}>Delete</button>
+                                    <button className="action-btn row-btn update-client-btn" onClick={() => { handleSelectedData(c.categoryId, c.categoryName); makeUpdateModalAppear() }}>Update</button>
+                                    <button className="action-btn row-btn delete-client-btn" onClick={() => { handleSelectedData(c.categoryId, c.categoryName); makeDeleteModalAppear() }}>Delete</button>
                                 </td>
                             </tr>
                         )}
