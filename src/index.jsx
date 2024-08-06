@@ -1,27 +1,26 @@
 import { useState, useEffect } from 'react';
 import { Toaster, toast } from 'sonner';
 
-// import ClientAddModal
-import ClientAddModal from './ClientAddModal.jsx';
+// // import CategoryAddModal
+// import CategoryAddModal from './CategoryAddModal.jsx';
 
-// import ClientUpdateModal
-import ClientUpdateModal from './ClientUpdateModal.jsx';
+// // import CategoryUpdateModal
+// import CategoryUpdateModal from './CategoryUpdateModal.jsx';
 
-// import ClientDeleteModal
-import ClientDeleteModal from './ClientDeleteModal.jsx';
+// // import CategoryDeleteModal
+// import CategoryDeleteModal from './CategoryDeleteModal.jsx';
 
-const Clients = () => {
+const Categories = () => {
 
-    // get Clients to display
-    const [clients, setClients] = useState([]);
+    // get Categories to display
+    const [categories, setCategories] = useState([]);
 
     // set loading...
     const [loading, setLoading] = useState(true);
 
     // Handle individual variables
-    const [id, setId] = useState("");
-    const [clientName, setClientName] = useState("");
-    const [residency, setResidency] = useState("");
+    const [categoryId, setCategoryId] = useState("");
+    const [categoryName, setCategoryName] = useState("");
 
     // Add Modal
     const [showAddModal, setShowAddModal] = useState(false);
@@ -35,112 +34,112 @@ const Clients = () => {
     const [showDeleteModal, setShowDeleteModal] = useState(false);
     const makeDeleteModalAppear = () => setShowDeleteModal(!showDeleteModal);
 
-    // Fetch Clients
-    const getClients = async () => {
+    // Fetch Categories
+    const getCategories = async () => {
         const response = await fetch(
-            "http://localhost:5029/api/ClientApi/GetClients"
+            "http://localhost:5175/api/CategoryApi/GetCategories"
         );
         const result = await response.json();
-        setClients(result);
+        setCategories(result);
         setLoading(false);
     }
 
-    // Fetch Client
-    const getClient = async (id) => {
-        const response = await fetch(
-            "http://localhost:5029/api/ClientApi/GetClient?id=" + id,
-        );
+    // // Fetch Client
+    // const getClient = async (id) => {
+    //     const response = await fetch(
+    //         "http://localhost:5029/api/ClientApi/GetClient?id=" + id,
+    //     );
 
-        const result = await response.json();
-        setId(result.id);
-        setClientName(result.clientName);
-        setResidency(result.residency);
+    //     const result = await response.json();
+    //     setId(result.id);
+    //     setClientName(result.clientName);
+    //     setResidency(result.residency);
 
-        setLoading(false);
-    }
+    //     setLoading(false);
+    // }
 
-    // Add Client
-    const saveClient = async () => {
-        const dataToSend = {
-            "clientName": clientName,
-            "residency": residency
-        }
+    // // Add Client
+    // const saveClient = async () => {
+    //     const dataToSend = {
+    //         "clientName": clientName,
+    //         "residency": residency
+    //     }
 
-        const response = await fetch(
-            "http://localhost:5029/api/ClientApi/SaveClient",
-            {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify(dataToSend)
-            }
-        );
+    //     const response = await fetch(
+    //         "http://localhost:5029/api/ClientApi/SaveClient",
+    //         {
+    //             method: "POST",
+    //             headers: {
+    //                 "Content-Type": "application/json"
+    //             },
+    //             body: JSON.stringify(dataToSend)
+    //         }
+    //     );
 
-        if (response.ok) {
-            await getClients();
-            makeAddModalAppear();
-            setClientName('');
-            setResidency('');
-            toast.success('Client saved successfully');
-        } else {
-            toast.error('Failed to save client');
-        }
-    }
+    //     if (response.ok) {
+    //         await getClients();
+    //         makeAddModalAppear();
+    //         setClientName('');
+    //         setResidency('');
+    //         toast.success('Client saved successfully');
+    //     } else {
+    //         toast.error('Failed to save client');
+    //     }
+    // }
 
-    // Update Client
-    const updateClient = async () => {
-        const dataToSend = {
-            "clientName": clientName,
-            "residency": residency,
-        }
+    // // Update Client
+    // const updateClient = async () => {
+    //     const dataToSend = {
+    //         "clientName": clientName,
+    //         "residency": residency,
+    //     }
 
-        const response = await fetch(
-            "http://localhost:5029/api/ClientApi/UpdateClient?Id=" + id,
-            {
-                method: "PUT",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify(dataToSend)
-            }
-        );
+    //     const response = await fetch(
+    //         "http://localhost:5029/api/ClientApi/UpdateClient?Id=" + id,
+    //         {
+    //             method: "PUT",
+    //             headers: {
+    //                 "Content-Type": "application/json"
+    //             },
+    //             body: JSON.stringify(dataToSend)
+    //         }
+    //     );
 
-        if (response.ok) {
-            await getClients();
-            makeUpdateModalAppear();
-            setClientName('');
-            setResidency('');
-            toast.success('Client updated successfully');
-        } else {
-            toast.error('Failed to save client');
-        }
+    //     if (response.ok) {
+    //         await getClients();
+    //         makeUpdateModalAppear();
+    //         setClientName('');
+    //         setResidency('');
+    //         toast.success('Client updated successfully');
+    //     } else {
+    //         toast.error('Failed to save client');
+    //     }
 
-    }
+    // }
 
-    // Delete Client
-    const deleteClient = async (id) => {
-        const response = await fetch(
-            "http://localhost:5029/api/ClientApi/DeleteClient?Id=" + id,
-            {
-                method: "DELETE",
-            }
-        );
+    // // Delete Client
+    // const deleteClient = async (id) => {
+    //     const response = await fetch(
+    //         "http://localhost:5029/api/ClientApi/DeleteClient?Id=" + id,
+    //         {
+    //             method: "DELETE",
+    //         }
+    //     );
 
-        if (response.ok) {
-            await getClients();
-            makeDeleteModalAppear();
-            setClientName('');
-            setResidency('');
-            toast.success('Client deleted successfully');
-        } else {
-            toast.error('Failed to delete client');
-        }
-    }
+    //     if (response.ok) {
+    //         await getClients();
+    //         makeDeleteModalAppear();
+    //         setClientName('');
+    //         setResidency('');
+    //         toast.success('Client deleted successfully');
+    //     } else {
+    //         toast.error('Failed to delete client');
+    //     }
+    // }
 
     // update browser in case of database updates
     useEffect(() => {
-        getClients();
+        getCategories();
     }, []);
 
     // if the browser is still loading data
@@ -149,7 +148,7 @@ const Clients = () => {
     return (
         <>
             {/* Add Client */}
-            <ClientAddModal
+            {/* <ClientAddModal
                 showAddModal={showAddModal}
                 makeAddModalAppear={makeAddModalAppear}
                 clientName={clientName}
@@ -157,10 +156,10 @@ const Clients = () => {
                 residency={residency}
                 setResidency={setResidency}
                 saveClient={saveClient}
-            />
+            /> */}
 
             {/* Update Client */}
-            <ClientUpdateModal
+            {/* <ClientUpdateModal
                 showUpdateModal={showUpdateModal}
                 makeUpdateModalAppear={makeUpdateModalAppear}
                 id={id}
@@ -170,23 +169,23 @@ const Clients = () => {
                 setClientName={setClientName}
                 setId={setId}
                 updateClient={updateClient}
-            />
+            /> */}
 
             {/* Delete Client */}
-            <ClientDeleteModal
+            {/* <ClientDeleteModal
                 showDeleteModal={showDeleteModal}
                 makeDeleteModalAppear={makeDeleteModalAppear}
                 id={id}
                 clientName={clientName}
                 residency={residency}
                 deleteClient={deleteClient}
-            />
+            /> */}
            
-            <h3 className="title">CRUD With C# API</h3>
+            <h3 className="title">Simple ReactJS POS With C# API</h3>
 
             {/* Show Add Client Modal */}
             <div className="add-client-btn-container">
-                <button className="action-btn add-client-btn" onClick={makeAddModalAppear}>Add New Client</button>
+                <button className="action-btn add-client-btn" onClick={makeAddModalAppear}>Add New Category</button>
             </div>
 
             {/* Display All Client Data */}
@@ -196,19 +195,17 @@ const Clients = () => {
                         <tr>
                             <th>Id</th>
                             <th>Name</th>
-                            <th>Residency</th>
                             <th className='action-btn-row-container'>Actions</th>
                         </tr>
                     </thead>
                     <tbody>
-                        {clients.map((c) =>
-                            <tr key={c.id}>
-                                <td>{c.id}</td>
-                                <td>{c.clientName}</td>
-                                <td>{c.residency}</td>
+                        {categories.map((c) =>
+                            <tr key={c.categoryId}>
+                                <td>{c.categoryId}</td>
+                                <td>{c.categoryName}</td>
                                 <td className='action-btn-container-display'>
-                                    <button className="action-btn row-btn update-client-btn" onClick={() => { getClient(c.id); makeUpdateModalAppear() }}>Update</button>
-                                    <button className="action-btn row-btn delete-client-btn" onClick={() => { getClient(c.id); makeDeleteModalAppear() }}>Delete</button>
+                                    {/* <button className="action-btn row-btn update-client-btn" onClick={() => { getClient(c.id); makeUpdateModalAppear() }}>Update</button>
+                                    <button className="action-btn row-btn delete-client-btn" onClick={() => { getClient(c.id); makeDeleteModalAppear() }}>Delete</button> */}
                                 </td>
                             </tr>
                         )}
@@ -220,4 +217,4 @@ const Clients = () => {
     );
 }
 
-export default Clients;
+export default Categories;
