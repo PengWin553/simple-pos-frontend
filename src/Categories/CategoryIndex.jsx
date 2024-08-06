@@ -161,37 +161,40 @@ const Categories = () => {
                 deleteCategory={deleteCategory}
             />
            
-            <h3 className="title">Simple ReactJS POS With C# API</h3>
-
             {/* Show Add Category Modal */}
             <div className="add-client-btn-container">
                 <button className="action-btn add-client-btn" onClick={makeAddModalAppear}>Add New Category</button>
             </div>
 
             {/* Display All Category Data */}
-            <div className="fixTableHead">
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Id</th>
-                            <th>Name</th>
-                            <th className='action-btn-row-container'>Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {categories.map((c) =>
-                            <tr key={c.categoryId}>
-                                <td>{c.categoryId}</td>
-                                <td>{c.categoryName}</td>
-                                <td className='action-btn-container-display'>
-                                    <button className="action-btn row-btn update-client-btn" onClick={() => { handleSelectedData(c.categoryId, c.categoryName); makeUpdateModalAppear() }}>Update</button>
-                                    <button className="action-btn row-btn delete-client-btn" onClick={() => { handleSelectedData(c.categoryId, c.categoryName); makeDeleteModalAppear() }}>Delete</button>
-                                </td>
-                            </tr>
-                        )}
-                    </tbody>
-                </table>
+            <div className="content-container">
+                <div className="table-container">
+                    <div className="fixTableHead">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Id</th>
+                                    <th>Name</th>
+                                    <th className='action-btn-row-container'>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {categories.map((c) =>
+                                    <tr key={c.categoryId}>
+                                        <td>{c.categoryId}</td>
+                                        <td>{c.categoryName}</td>
+                                        <td className='action-btn-container-display'>
+                                            <button className="action-btn row-btn update-client-btn" onClick={() => { handleSelectedData(c.categoryId, c.categoryName); makeUpdateModalAppear() }}>Update</button>
+                                            <button className="action-btn row-btn delete-client-btn" onClick={() => { handleSelectedData(c.categoryId, c.categoryName); makeDeleteModalAppear() }}>Delete</button>
+                                        </td>
+                                    </tr>
+                                )}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
             </div>
+           
             <Toaster expand={true} richColors position='bottom-right' className='mr-8'></Toaster>
         </>
     );
