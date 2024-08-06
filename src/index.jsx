@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react';
 import { Toaster, toast } from 'sonner';
 
-// // import CategoryAddModal
-// import CategoryAddModal from './CategoryAddModal.jsx';
+// import CategoryAddModal
+import CategoryAddModal from './CategoryAddModal.jsx';
 
 // // import CategoryUpdateModal
 // import CategoryUpdateModal from './CategoryUpdateModal.jsx';
@@ -58,34 +58,32 @@ const Categories = () => {
     //     setLoading(false);
     // }
 
-    // // Add Client
-    // const saveClient = async () => {
-    //     const dataToSend = {
-    //         "clientName": clientName,
-    //         "residency": residency
-    //     }
+    // Add Category
+    const saveCategory = async () => {
+        const dataToSend = {
+            "categoryName": categoryName,
+        }
 
-    //     const response = await fetch(
-    //         "http://localhost:5029/api/ClientApi/SaveClient",
-    //         {
-    //             method: "POST",
-    //             headers: {
-    //                 "Content-Type": "application/json"
-    //             },
-    //             body: JSON.stringify(dataToSend)
-    //         }
-    //     );
+        const response = await fetch(
+            "http://localhost:5175/api/CategoryApi/SaveCategory",
+            {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(dataToSend)
+            }
+        );
 
-    //     if (response.ok) {
-    //         await getClients();
-    //         makeAddModalAppear();
-    //         setClientName('');
-    //         setResidency('');
-    //         toast.success('Client saved successfully');
-    //     } else {
-    //         toast.error('Failed to save client');
-    //     }
-    // }
+        if (response.ok) {
+            await getCategories();
+            makeAddModalAppear();
+            setCategoryName('');
+            toast.success('Category saved successfully');
+        } else {
+            toast.error('Failed to save category');
+        }
+    }
 
     // // Update Client
     // const updateClient = async () => {
@@ -147,16 +145,14 @@ const Categories = () => {
 
     return (
         <>
-            {/* Add Client */}
-            {/* <ClientAddModal
+            {/* Add Category */}
+            <CategoryAddModal
                 showAddModal={showAddModal}
                 makeAddModalAppear={makeAddModalAppear}
-                clientName={clientName}
-                setClientName={setClientName}
-                residency={residency}
-                setResidency={setResidency}
-                saveClient={saveClient}
-            /> */}
+                categoryName={categoryName}
+                setCategoryName={setCategoryName}
+                saveCategory={saveCategory}
+            />
 
             {/* Update Client */}
             {/* <ClientUpdateModal
@@ -183,7 +179,7 @@ const Categories = () => {
            
             <h3 className="title">Simple ReactJS POS With C# API</h3>
 
-            {/* Show Add Client Modal */}
+            {/* Show Add Category Modal */}
             <div className="add-client-btn-container">
                 <button className="action-btn add-client-btn" onClick={makeAddModalAppear}>Add New Category</button>
             </div>
