@@ -1,4 +1,5 @@
 import Categories from './Categories/CategoryIndex';
+import Products from './Products/ProductIndex';
 import Home from './Home/Home';
 import NavigationBar from './Navbar/Navbar';
 import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-dom';
@@ -25,6 +26,11 @@ const App = () => {
                         {/* categoriesPage */}
                         <Route path="/categories">
                             <Categories />
+                        </Route>
+
+                        {/* productsPage */}
+                        <Route path="/products">
+                            <Products />
                         </Route>
 
                         {/* productsPage */}
