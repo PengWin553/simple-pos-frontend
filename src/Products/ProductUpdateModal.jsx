@@ -85,7 +85,7 @@ const ProductUpdateModal = ({
                 
             </Modal.Body>
             <Modal.Footer className="modal-footer">
-                <button onClick={updateProduct} className="action-btn modal-btn">Save Product</button>
+                <button onClick={updateProduct} className="action-btn modal-btn">Save Changes</button>
             </Modal.Footer>
             </Modal>
         </>

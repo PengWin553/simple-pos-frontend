@@ -7,6 +7,9 @@ import ProductAddModal from './ProductAddModal.jsx';
 // import ProductUpdateModal
 import ProductUpdateModal from './ProductUpdateModal.jsx';
 
+// import ProductDeleteModal
+import ProductDeleteModal from './ProductDeleteModal.jsx';
+
 const Products = () => {
     // get Products to display
     const [products, setProducts] = useState([]);
@@ -32,6 +35,10 @@ const Products = () => {
     // Update Modal
     const [showUpdateModal, setShowUpdateModal] = useState(false);
     const makeUpdateModalAppear = () => setShowUpdateModal(!showUpdateModal);
+
+    // Delete Modal
+    const [showDeleteModal, setShowDeleteModal] = useState(false);
+    const makeDeleteModalAppear = () => setShowDeleteModal(!showDeleteModal);
 
     // Fetch Products
     const getProducts = async () => {
@@ -151,6 +158,25 @@ const Products = () => {
         }
     }
 
+    // Delete Product
+    const deleteProduct = async () => {
+        const response = await fetch(
+            "http://localhost:5175/api/ProductApi/DeleteProduct?Id=" + productId,
+            {
+                method: "DELETE",
+            }
+        );
+
+        if (response.ok) {
+            await getProducts();
+            makeDeleteModalAppear();
+            setVariablesToDefault('');
+            toast.success('Product deleted successfully');
+        } else {
+            toast.error('Failed to delete product');
+        }
+    }
+
     // if the browser is still loading data
     if (loading) return <center><h1>Loading</h1></center>
 
@@ -193,6 +219,15 @@ const Products = () => {
                 updateProduct={updateProduct}
             />
 
+            {/* Delete Product */}
+            <ProductDeleteModal
+                showDeleteModal={showDeleteModal}
+                makeDeleteModalAppear={makeDeleteModalAppear}
+                productId={productId}
+                productName={productName}
+                deleteProduct={deleteProduct}
+            />
+
             {/* Show Add Product Modal */}
             <div className="add-client-btn-container">
                 <button className="action-btn add-client-btn" onClick={makeAddModalAppear}>Add New Product</button>
@@ -225,6 +260,7 @@ const Products = () => {
                                         <td>{getCategoryName(p.categoryId)}</td>
                                         <td className='action-btn-container-display'>
                                             <button className="action-btn row-btn update-client-btn" onClick={() => { handleSelectedData(p.productId, p.productName, p.price, p.stock, p.unit, p.categoryId); makeUpdateModalAppear() }}>Update</button>
+                                            <button className="action-btn row-btn delete-client-btn" onClick={() => { handleSelectedData(p.productId, p.productName); makeDeleteModalAppear() }}>Delete</button>
                                         </td>
                                     </tr>
                                 )}
@@ -233,7 +269,7 @@ const Products = () => {
                     </div>
                 </div>
             </div>
-            
+
             <Toaster expand={true} richColors position='bottom-right' className='mr-8'></Toaster>
         </>
     );

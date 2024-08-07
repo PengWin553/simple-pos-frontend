@@ -104,7 +104,7 @@ const Categories = () => {
     }
 
     // Delete Category
-    const deleteCategory = async (id) => {
+    const deleteCategory = async () => {
         const response = await fetch(
             "http://localhost:5175/api/CategoryApi/DeleteCategory?Id=" + categoryId,
             {
