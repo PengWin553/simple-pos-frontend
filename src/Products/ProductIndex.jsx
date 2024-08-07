@@ -4,6 +4,9 @@ import { Toaster, toast } from 'sonner';
 // import ProductAddModal
 import ProductAddModal from './ProductAddModal.jsx';
 
+// import ProductUpdateModal
+import ProductUpdateModal from './ProductUpdateModal.jsx';
+
 const Products = () => {
     // get Products to display
     const [products, setProducts] = useState([]);
@@ -25,6 +28,10 @@ const Products = () => {
     // Add Modal
     const [showAddModal, setShowAddModal] = useState(false);
     const makeAddModalAppear = () => setShowAddModal(!showAddModal);
+
+    // Update Modal
+    const [showUpdateModal, setShowUpdateModal] = useState(false);
+    const makeUpdateModalAppear = () => setShowUpdateModal(!showUpdateModal);
 
     // Fetch Products
     const getProducts = async () => {
@@ -72,6 +79,16 @@ const Products = () => {
         setCategoryId('');
     }
 
+    // handle selected data
+    const handleSelectedData = async (productId, productName, price, stock, unit, categoryId) => {
+        setProductId(productId);
+        setProductName(productName);
+        setPrice(price);
+        setStock(stock);
+        setUnit(unit);
+        setCategoryId(categoryId);
+    }
+
     // Add Product
     const saveProduct = async () => {
         const dataToSend = {
@@ -103,6 +120,37 @@ const Products = () => {
         }
     }
 
+    // Update Product
+    const updateProduct = async () => {
+        const dataToSend = {
+            "productName": productName,
+            "price": price,
+            "stock": stock,
+            "unit": unit,
+            "categoryId": categoryId,
+        }
+
+        const response = await fetch(
+            "http://localhost:5175/api/ProductApi/UpdateProduct?Id=" + productId,
+            {
+                method: "PUT",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(dataToSend)
+            }
+        );
+
+        if (response.ok) {
+            await getProducts();
+            makeUpdateModalAppear();
+            setVariablesToDefault();
+            toast.success('Product updated successfully');
+        } else {
+            toast.error('Failed to update product');
+        }
+    }
+
     // if the browser is still loading data
     if (loading) return <center><h1>Loading</h1></center>
 
@@ -124,6 +172,25 @@ const Products = () => {
                 setCategoryId={setCategoryId}
                 categories={categories}
                 saveProduct={saveProduct}
+            />
+
+             {/* Update Product */}
+             <ProductUpdateModal
+                showUpdateModal={showUpdateModal}
+                makeUpdateModalAppear={makeUpdateModalAppear}
+                productId={productId}
+                productName={productName}
+                price={price}
+                stock={stock}
+                unit={unit}
+                categoryId={categoryId}
+                setProductName={setProductName}
+                setPrice={setPrice}
+                setStock={setStock}
+                setUnit={setUnit}
+                setCategoryId={setCategoryId}
+                categories={categories}
+                updateProduct={updateProduct}
             />
 
             {/* Show Add Product Modal */}
@@ -157,7 +224,7 @@ const Products = () => {
                                         <td>{p.unit}</td>
                                         <td>{getCategoryName(p.categoryId)}</td>
                                         <td className='action-btn-container-display'>
-                                            {/* Action buttons */}
+                                            <button className="action-btn row-btn update-client-btn" onClick={() => { handleSelectedData(p.productId, p.productName, p.price, p.stock, p.unit, p.categoryId); makeUpdateModalAppear() }}>Update</button>
                                         </td>
                                     </tr>
                                 )}
