@@ -7,11 +7,13 @@ const ProductAddModal = ({
     price,
     stock,
     unit,
+    sku,
     categoryId,
     setProductName,
     setPrice,
     setStock,
     setUnit,
+    setSku,
     setCategoryId,
     categories,
     saveProduct
@@ -57,6 +59,14 @@ const ProductAddModal = ({
                     placeholder='Enter unit'
                 />
 
+                <label htmlFor="sku">SKU:</label>
+                <input type="text"
+                    value={sku}
+                    onChange={(e) => setSku(e.target.value)}
+                    id="sku"
+                    placeholder='Enter sku'
+                />
+
                 <label htmlFor="category">Category:</label>
                
                 <select
@@ -81,7 +91,6 @@ const ProductAddModal = ({
                 <button onClick={saveProduct} className="action-btn modal-btn">Save Product</button>
             </Modal.Footer>
             </Modal>
-
         </>
 
     );

@@ -20,10 +20,11 @@ const Products = () => {
     const [price, setPrice] = useState('');
     const [stock, setStock] = useState('');
     const [unit, setUnit] = useState('');
+    const [sku, setSku] = useState('');
     const [categoryId, setCategoryId] = useState('');
 
-    // authKey
-    var authKey = 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJhZG1pbiIsImp0aSI6ImY1MjU1NTc3LTk4NzgtNDNkYS1iMGQ5LTIxNjBiNWUwY2E5YSIsImV4cCI6MTcyMzE4NTMzMCwiaXNzIjoiUGVuZ1dpbjU1MyIsImF1ZCI6ImVkaW9ucyJ9.7nOkUt-Yvbiyxa528yw9JDRs6hE0-sHKDNgL6XqLIB4';
+    // authToken
+    var authToken = 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJhZG1pbiIsImp0aSI6IjUwZjg2NWU2LTVkMTQtNDczNi1iZjYzLTZiNzM3ZTUzNzc1NiIsImV4cCI6MTcyMzE5NDA2NSwiaXNzIjoiUGVuZ1dpbjU1MyIsImF1ZCI6ImVkaW9ucyJ9.39uwIOmLJ76Nm1veW_HTBNE2A-_VUxaM5xsjQHF1CRo';
     
     // get Categories to display
     const [categories, setCategories] = useState([]);
@@ -48,12 +49,13 @@ const Products = () => {
         const response = await fetch(
             "http://localhost:5175/api/ProductApi/GetProducts", {
                 headers: {
-                    'Authorization' : authKey,
+                    'Authorization' : authToken,
                 }
             }
         );
 
         const result = await response.json();
+        console.log(result); // Add this line to check the API response
         setProducts(result);
     }
 
@@ -62,7 +64,7 @@ const Products = () => {
         const response = await fetch(
             "http://localhost:5175/api/CategoryApi/GetCategories", {
                 headers: {
-                    'Authorization' : authKey,
+                    'Authorization' : authToken,
                 }
             }
         );
@@ -94,16 +96,18 @@ const Products = () => {
         setPrice('');
         setStock('');
         setUnit('');
+        setSku('');
         setCategoryId('');
     }
 
     // handle selected data
-    const handleSelectedData = async (productId, productName, price, stock, unit, categoryId) => {
+    const handleSelectedData = async (productId, productName, price, stock, unit, sku, categoryId) => {
         setProductId(productId);
         setProductName(productName);
         setPrice(price);
         setStock(stock);
         setUnit(unit);
+        setSku(sku);
         setCategoryId(categoryId);
     }
 
@@ -114,21 +118,22 @@ const Products = () => {
             "Price": price,
             "Stock": stock,
             "Unit": unit,
+            "Sku": sku,
             "CategoryId": categoryId,
         }
-
+    
         const response = await fetch(
             "http://localhost:5175/api/ProductApi/SaveProduct",
             {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
-                    'Authorization': authKey,
+                    'Authorization': authToken,
                 },
                 body: JSON.stringify(dataToSend)
             }
         );
-
+    
         if (response.ok) {
             await getProducts();
             makeAddModalAppear();
@@ -146,6 +151,7 @@ const Products = () => {
             "price": price,
             "stock": stock,
             "unit": unit,
+            "sku": sku,
             "categoryId": categoryId,
         }
 
@@ -155,7 +161,7 @@ const Products = () => {
                 method: "PUT",
                 headers: {
                     "Content-Type": "application/json",
-                    'Authorization': authKey,
+                    'Authorization': authToken,
                 },
                 body: JSON.stringify(dataToSend)
             }
@@ -178,7 +184,7 @@ const Products = () => {
             {
                 method: "DELETE",
                 headers: {
-                    'Authorization': authKey,
+                    'Authorization': authToken,
                 }
             }
         );
@@ -206,18 +212,20 @@ const Products = () => {
                 price={price}
                 stock={stock}
                 unit={unit}
+                sku={sku}
                 categoryId={categoryId}
                 setProductName={setProductName}
                 setPrice={setPrice}
                 setStock={setStock}
                 setUnit={setUnit}
+                setSku={setSku}
                 setCategoryId={setCategoryId}
                 categories={categories}
                 saveProduct={saveProduct}
             />
 
-             {/* Update Product */}
-             <ProductUpdateModal
+            {/* Update Product */}
+            <ProductUpdateModal
                 showUpdateModal={showUpdateModal}
                 makeUpdateModalAppear={makeUpdateModalAppear}
                 productId={productId}
@@ -225,11 +233,13 @@ const Products = () => {
                 price={price}
                 stock={stock}
                 unit={unit}
+                sku={sku}
                 categoryId={categoryId}
                 setProductName={setProductName}
                 setPrice={setPrice}
                 setStock={setStock}
                 setUnit={setUnit}
+                setSku={setSku}
                 setCategoryId={setCategoryId}
                 categories={categories}
                 updateProduct={updateProduct}
@@ -261,6 +271,7 @@ const Products = () => {
                                     <th>Price</th>
                                     <th>Stock</th>
                                     <th>Unit</th>
+                                    <th>Sku</th>
                                     <th>Category</th>
                                     <th className='action-btn-row-container'>Actions</th>
                                 </tr>
@@ -273,9 +284,10 @@ const Products = () => {
                                         <td>{p.price}</td>
                                         <td>{p.stock}</td>
                                         <td>{p.unit}</td>
+                                        <td>{p.sku}</td>
                                         <td>{getCategoryName(p.categoryId)}</td>
                                         <td className='action-btn-container-display'>
-                                            <button className="action-btn row-btn update-client-btn" onClick={() => { handleSelectedData(p.productId, p.productName, p.price, p.stock, p.unit, p.categoryId); makeUpdateModalAppear() }}>Update</button>
+                                            <button className="action-btn row-btn update-client-btn" onClick={() => { handleSelectedData(p.productId, p.productName, p.price, p.stock, p.unit, p.sku, p.categoryId); makeUpdateModalAppear() }}>Update</button>
                                             <button className="action-btn row-btn delete-client-btn" onClick={() => { handleSelectedData(p.productId, p.productName); makeDeleteModalAppear() }}>Delete</button>
                                         </td>
                                     </tr>
