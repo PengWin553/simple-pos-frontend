@@ -34,6 +34,9 @@ const Categories = () => {
     const [showDeleteModal, setShowDeleteModal] = useState(false);
     const makeDeleteModalAppear = () => setShowDeleteModal(!showDeleteModal);
 
+    // authKey (expires every 30 minutes)
+    var authKey = 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJhZG1pbiIsImp0aSI6ImY1MjU1NTc3LTk4NzgtNDNkYS1iMGQ5LTIxNjBiNWUwY2E5YSIsImV4cCI6MTcyMzE4NTMzMCwiaXNzIjoiUGVuZ1dpbjU1MyIsImF1ZCI6ImVkaW9ucyJ9.7nOkUt-Yvbiyxa528yw9JDRs6hE0-sHKDNgL6XqLIB4';
+
     const handleSelectedData = async (id, name) => {
         setCategoryId(id);
         setCategoryName(name);
@@ -42,7 +45,11 @@ const Categories = () => {
     // Fetch Categories
     const getCategories = async () => {
         const response = await fetch(
-            "http://localhost:5175/api/CategoryApi/GetCategories"
+            "http://localhost:5175/api/CategoryApi/GetCategories", {
+                headers: {
+                    'Authorization': authKey,
+                }
+            }
         );
         const result = await response.json();
         setCategories(result);
@@ -60,7 +67,8 @@ const Categories = () => {
             {
                 method: "POST",
                 headers: {
-                    "Content-Type": "application/json"
+                    "Content-Type": "application/json",
+                    'Authorization': authKey,
                 },
                 body: JSON.stringify(dataToSend)
             }
@@ -87,7 +95,8 @@ const Categories = () => {
             {
                 method: "PUT",
                 headers: {
-                    "Content-Type": "application/json"
+                    "Content-Type": "application/json",
+                    'Authorization': authKey,
                 },
                 body: JSON.stringify(dataToSend)
             }
@@ -109,6 +118,9 @@ const Categories = () => {
             "http://localhost:5175/api/CategoryApi/DeleteCategory?Id=" + categoryId,
             {
                 method: "DELETE",
+                headers: {
+                    'Authorization': authKey,
+                }
             }
         );
 

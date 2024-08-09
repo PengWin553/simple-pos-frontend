@@ -21,6 +21,9 @@ const Products = () => {
     const [stock, setStock] = useState('');
     const [unit, setUnit] = useState('');
     const [categoryId, setCategoryId] = useState('');
+
+    // authKey
+    var authKey = 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJhZG1pbiIsImp0aSI6ImY1MjU1NTc3LTk4NzgtNDNkYS1iMGQ5LTIxNjBiNWUwY2E5YSIsImV4cCI6MTcyMzE4NTMzMCwiaXNzIjoiUGVuZ1dpbjU1MyIsImF1ZCI6ImVkaW9ucyJ9.7nOkUt-Yvbiyxa528yw9JDRs6hE0-sHKDNgL6XqLIB4';
     
     // get Categories to display
     const [categories, setCategories] = useState([]);
@@ -43,7 +46,11 @@ const Products = () => {
     // Fetch Products
     const getProducts = async () => {
         const response = await fetch(
-            "http://localhost:5175/api/ProductApi/GetProducts"
+            "http://localhost:5175/api/ProductApi/GetProducts", {
+                headers: {
+                    'Authorization' : authKey,
+                }
+            }
         );
 
         const result = await response.json();
@@ -53,7 +60,11 @@ const Products = () => {
     // Fetch Categories
     const getCategories = async () => {
         const response = await fetch(
-            "http://localhost:5175/api/CategoryApi/GetCategories"
+            "http://localhost:5175/api/CategoryApi/GetCategories", {
+                headers: {
+                    'Authorization' : authKey,
+                }
+            }
         );
 
         const result = await response.json();
@@ -111,7 +122,8 @@ const Products = () => {
             {
                 method: "POST",
                 headers: {
-                    "Content-Type": "application/json"
+                    "Content-Type": "application/json",
+                    'Authorization': authKey,
                 },
                 body: JSON.stringify(dataToSend)
             }
@@ -142,7 +154,8 @@ const Products = () => {
             {
                 method: "PUT",
                 headers: {
-                    "Content-Type": "application/json"
+                    "Content-Type": "application/json",
+                    'Authorization': authKey,
                 },
                 body: JSON.stringify(dataToSend)
             }
@@ -164,6 +177,9 @@ const Products = () => {
             "http://localhost:5175/api/ProductApi/DeleteProduct?Id=" + productId,
             {
                 method: "DELETE",
+                headers: {
+                    'Authorization': authKey,
+                }
             }
         );
 
