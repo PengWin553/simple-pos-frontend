@@ -57,7 +57,7 @@ const Dashboard = () => {
                         >
                             <img src={creeperHead} alt="a creeper head" />
                             <h3 className='product-name'>{p.productName}</h3>
-                            <p>${p.price}</p>
+                            <p className='product-price'>${p.price}</p>
                             <input
                                 id={`checkbox-${p.productId}`}
                                 type="checkbox"
@@ -69,11 +69,54 @@ const Dashboard = () => {
                     ))}
                 </div>
             </div>
+            
             <div className="checkOutContainer">
-                <h4 className='checkout-title'>Checkout</h4>
+                <h4 className='checkout-title'><strong>Checkout</strong></h4>
 
                 {checkOut.length > 0 ?
                 (
+                    <>
+                        <div className="fixTableHead">
+                            <table className="checkout-table">
+                                <thead className='thead'>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Price</th>
+                                        <th>Quantity</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {checkOut.map(item => (
+                                        <tr key={item.productId}>
+                                        
+                                            <td>{item.productName}</td>
+                                            <td>${item.price}</td>
+                                            <td style={{background: '', display: 'flex', justifyContent: 'space-around'}}>
+                                                <i class='bx bxs-minus-circle bx-quantity-icon' onClick={() => handleQuantityChange(item.productId, -1)} />
+                                                <span style={{paddingLeft: '8px', paddingRight: '8px'}}>{item.quantity}</span>
+                                                <i class='bx bxs-plus-circle bx-quantity-icon' onClick={() => handleQuantityChange(item.productId, 1)} />
+                                            </td>
+                                            <td className='trash-column'>
+                                                <i class='bx bxs-trash' onClick={() => handleSelectProduct(item)} style={{textAlign: 'center'}}></i>
+                                            </td>
+                                        </tr>
+                                    ))}
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div className="foot">
+                            <div className="total-container">
+                                <h6 colSpan="3"><strong>Total:</strong></h6>
+                                <h6>${calculateTotal()}</h6>
+                            </div>
+                            <div className="checkout-btn-container">
+                                <button className='checkout-btn'>Checkout</button>
+                            </div>
+                        </div>
+                    </>
+                ) : (
                     <>
                         <table className="checkout-table">
                             <thead>
@@ -85,74 +128,25 @@ const Dashboard = () => {
                                 </tr>
                             </thead>
                             <tbody>
-                                {checkOut.map(item => (
-                                    <tr key={item.productId}>
-                                    
-                                        <td>{item.productName}</td>
-                                        <td>${item.price}</td>
-                                        <td style={{background: '', display: 'flex', justifyContent: 'space-around'}}>
-                                            <i class='bx bxs-minus-circle bx-quantity-icon' onClick={() => handleQuantityChange(item.productId, -1)} />
-                                            <span>{item.quantity}</span>
-                                            <i class='bx bxs-plus-circle bx-quantity-icon' onClick={() => handleQuantityChange(item.productId, 1)} />
-                                        </td>
-                                        <td className='trash-column'>
-                                            <i class='bx bxs-trash' onClick={() => handleSelectProduct(item)} style={{textAlign: 'center'}}></i>
-                                        </td>
-                                    
-                                    </tr>
-                                ))}
-                            </tbody>
-                        {/* <tfoot>
-                            <tr>
-                                <td colSpan="3"><strong>Total:</strong></td>
-                                <td>${calculateTotal()}</td>
-                            </tr>
-                            <tr>
-                                <button>Checkout</button>
-                            </tr>
-                        </tfoot> */}
-                    </table>
-
-                    <div className="foot">
-                        <div className="total-container">
-                            <h6 colSpan="3"><strong>Total:</strong></h6>
-                            <h6>${calculateTotal()}</h6>
-                        </div>
-                        <div className="checkout-btn-container">
-                            <button className='checkout-btn'>Checkout</button>
-                        </div>
-                    </div>
-                    </>
-                   
-
-                ) : (
-                    <table className="checkout-table">
-                        <thead>
-                            <tr>
-                                <th>Name</th>
-                                <th>Price</th>
-                                <th>Quantity</th>
-                                <th></th>
-                            </tr>
-                        </thead>
-                        <tbody>
                                 <tr>
-                                
                                     <td></td>
                                     <td></td>
-                                    <td>
-                                    </td>
-                                    <td className='trash-column'>
-                                    </td>
-                                
+                                    <td></td>
+                                    <td></td>
                                 </tr>
-                        </tbody>
-                        <tfoot className='checkout-foot'>
-                            <tr>
-                                <td></td>
-                            </tr>
-                        </tfoot>
-                    </table>
+                            </tbody>
+                        </table>
+
+                        <div className="foot">
+                            <div className="total-container">
+                                <h6 colSpan="3"><strong>Total:</strong></h6>
+                                <h6>$0</h6>
+                            </div>
+                            <div className="checkout-btn-container">
+                                <button className='checkout-btn'>Checkout</button>
+                            </div>
+                        </div>
+                    </>
                 )}
             </div>
         </div>

@@ -30,9 +30,16 @@ body, #root {
 }
 
 .content-container{
-  /* background: green; */
   background: #e2e1e3;
   height: 100vh;
+  display: flex;
+}
+
+.crud-content-container{
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  flex-direction: column;
 }
 
 main {
@@ -48,7 +55,6 @@ h1 {
 }
 
 /* add posts form */
-
 form {
   border: 1px solid black;
   padding: 1em;
@@ -102,7 +108,6 @@ textarea {
 }
 
 /* Posts */
-
 .posts-container {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -172,8 +177,9 @@ th, td {
   padding: 8px 15px; 
 } 
 
+
 th { 
-	background: #695cfe; 
+	background: #8a82e0; 
   color: white;
 }
 
@@ -300,9 +306,9 @@ tr .action-btn{
 }
 
 .table-container {
-  width: 100%;
-  /* max-width: 1500px; */
-  margin: 0 auto;
+  flex-grow: 1;
+  overflow-y: auto;
+  margin-bottom: 80px;
 }
 
 .fixTableHead { 
@@ -315,7 +321,7 @@ tr .action-btn{
 
 /* New styles for card layout */
 .card-content-container {
-  /* background: #e2e1e3; */
+  background: #F8F9FA;
   flex-grow: 1;
   overflow-y: auto;
   padding: 20px;
@@ -323,6 +329,7 @@ tr .action-btn{
   height: 680px;
   padding: 20px;
   border: 20px solid #e2e1e3;
+  border-radius: 30px;
 }
 
 .card-container {
@@ -337,13 +344,13 @@ tr .action-btn{
 }
 
 .product-card {
-  background-color: #f8f9fa;
+  background-color: #ffffff;
   border: 1px solid #dee2e6;
   border-radius: 8px;
   padding: 20px;
   width: 100%;
   height: 100%;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  box-shadow: 0 3px 9px rgba(0,0,0,0.2);
   transition: all 0.3s ease;
   display: flex;
   flex-direction: column;
@@ -370,13 +377,6 @@ tr .action-btn{
   /* background: yellow; */
 }
 
-/* .product-card .action-btn-container-display {
-  display: flex;
-  justify-content: space-between;
-  margin-top: auto;
-  padding-top: 10px;
-} */
-
 .product-card .card-btn {
   padding: 6px 10px;
   border: none;
@@ -398,6 +398,14 @@ tr .action-btn{
 
 .product-card .card-btn:hover {
   opacity: 0.8;
+}
+
+.product-name{
+  color: #494949;
+}
+
+.product-price{
+  color: rgb(67, 75, 149);
 }
 
 @media (max-width: 768px) {
@@ -425,21 +433,20 @@ tr .action-btn{
 }
 
 .checkOutContainer{
-  position: absolute;
-  top: 0;
-  right: 0;
-  width: 400px;
-  height: 100vh;
+  /* position: absolute; */
+  /* top: 0; */
+  /* right: 0; */
+  height: 680px;
+  border: 20px solid #e2e1e3;
   background: #F8F9FA; 
+  /* background: skyblue; */
+  width: 418px;
 }
 
 .checkout-item{
   background: yellow;
-  padding: 10px;
   display: flex;
 }
-
-
 
 h5{
   height: 100%;
@@ -460,7 +467,6 @@ h5{
 }
 
 .bxs-trash{
-  margin-left: 1rem;
   font-size: 25px;
   color: rgb(229, 115, 95);
 }
@@ -472,14 +478,20 @@ h5{
 
 .checkout-title{
   text-align: center;
-  padding: 1rem;
+  padding-top: 0.05rem;
+  padding-bottom: 0;
+  font-size: 24px;
+  /* background: yellow; */
 }
 
-.foot{
+.foot {
   position: absolute;
   bottom: 0;
-  /* background: green; */
-  width: 100%;
+  left: 0;
+  right: 0;
+  background: #F8F9FA;
+  padding-left: 10px;
+  padding-right: 10px;
 }
 
 .total-container{
@@ -512,5 +524,26 @@ h5{
   border: 0;
   border-radius: 1em;
   color: white;
-  background: rgb(115, 103, 195);
+  background: #7367c3;
+}
+
+.checkout-btn:hover{
+  background: rgb(97, 87, 162)
+}
+
+.checkout-table{
+  padding: 10px;
+}
+
+.checkOutContainer {
+  height: 680px;
+  border: 20px solid #e2e1e3;
+  background: #F8F9FA;
+  width: 418px;
+  border-radius: 30px;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  margin-left: -0.7em;
 }

@@ -240,14 +240,14 @@ const Products = () => {
                 productName={productName}
                 deleteProduct={deleteProduct}
             />
+            
+            <div className="crud-content-container">
+                {/* Show Add Product Modal */}
+                <div className="add-client-btn-container">
+                    <button className="action-btn add-client-btn" onClick={makeAddModalAppear}>Add New Product</button>
+                </div>
 
-            {/* Show Add Product Modal */}
-            <div className="add-client-btn-container">
-                <button className="action-btn add-client-btn" onClick={makeAddModalAppear}>Add New Product</button>
-            </div>
-
-            {/* Display All Product Data */}
-            <div className="content-container">
+                {/* Display All Product Data */}
                 <div className="table-container">
                     <div className="fixTableHead">
                         <table>

@@ -161,13 +161,13 @@ const Categories = () => {
                 deleteCategory={deleteCategory}
             />
            
-            {/* Show Add Category Modal */}
-            <div className="add-client-btn-container">
-                <button className="action-btn add-client-btn" onClick={makeAddModalAppear}>Add New Category</button>
-            </div>
-
             {/* Display All Category Data */}
-            <div className="content-container">
+            <div className="crud-content-container">
+                {/* Show Add Category Modal */}
+                <div className="add-client-btn-container">
+                    <button className="action-btn add-client-btn" onClick={makeAddModalAppear}>Add New Category</button>
+                </div>
+
                 <div className="table-container">
                     <div className="fixTableHead">
                         <table>
