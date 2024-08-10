@@ -252,7 +252,7 @@ tr .action-btn{
 }
 
 ::-webkit-scrollbar-thumb {
-  background: linear-gradient(45deg, #732ca0, #8a85ef);
+  background: linear-gradient(45deg, #e2b8fd, #c9c6f6);
   border-radius: 5px;
   height: 3%;
 }
@@ -330,6 +330,10 @@ tr .action-btn{
   grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
   gap: 20px;
   justify-content: start;
+}
+
+.card-container:hover{
+  cursor: pointer;
 }
 
 .product-card {
@@ -418,4 +422,13 @@ tr .action-btn{
     padding: 5px 8px;
     font-size: 0.7em;
   }
+}
+
+.checkOutContainer{
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 400px;
+  height: 100vh;
+  background: #F8F9FA; 
 }

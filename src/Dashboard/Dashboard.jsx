@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import creeperHead from '../assets/creeperhead.png';
+import CheckOutContainer from './CheckOutContainer';
 
 const Dashboard = () => {
 
@@ -37,7 +38,13 @@ const Dashboard = () => {
                         ))}
                     </div>
                 </div>
+
+               <CheckOutContainer />
+               
             </div>
+
+          
+
            
         </>
     )
