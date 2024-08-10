@@ -432,3 +432,85 @@ tr .action-btn{
   height: 100vh;
   background: #F8F9FA; 
 }
+
+.checkout-item{
+  background: yellow;
+  padding: 10px;
+  display: flex;
+}
+
+
+
+h5{
+  height: 100%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.bx-quantity-icon{
+  font-size: 25px;
+  color: #a59ed7;
+}
+
+.bx-quantity-icon:hover{
+  cursor: pointer;
+  color: #8c86b7;
+}
+
+.bxs-trash{
+  margin-left: 1rem;
+  font-size: 25px;
+  color: rgb(229, 115, 95);
+}
+
+.bxs-trash:hover{
+  color: rgb(202, 103, 85);
+  cursor: pointer;
+}
+
+.checkout-title{
+  text-align: center;
+  padding: 1rem;
+}
+
+.foot{
+  position: absolute;
+  bottom: 0;
+  /* background: green; */
+  width: 100%;
+}
+
+.total-container{
+  display: flex;
+  justify-content: space-between;
+  /* background: yellow; */
+  border-bottom: 1px solid #695cfe;
+}
+
+.total-container h6{
+  padding-top: 10px;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+.checkout-btn-container{
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  padding-bottom: 10px;
+  padding-top: 10px;
+}
+
+.checkout-btn{
+  width: 90%;
+  padding-top: 6px;
+  padding-bottom: 6px;
+  padding-left: 50px;
+  padding-right: 50px;
+  border: 0;
+  border-radius: 1em;
+  color: white;
+  background: rgb(115, 103, 195);
+}

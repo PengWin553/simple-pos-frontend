@@ -1,52 +1,161 @@
 import { useState, useEffect } from 'react';
 import creeperHead from '../assets/creeperhead.png';
-import CheckOutContainer from './CheckOutContainer';
+import 'boxicons';
 
 const Dashboard = () => {
-
-    // get Products to display
     const [products, setProducts] = useState([]);
+    const [checkOut, setCheckOut] = useState([]);
 
-    // Fetch Products
     const getProducts = async () => {
         const response = await fetch(
             "http://localhost:5062/api/ProductApi/GetProducts"
         );
-
         const result = await response.json();
-        console.log(result); // Add this line to check the API response
         setProducts(result);
     }
 
-    // update browser in case of database updates
     useEffect(() => {
         getProducts();
     }, []);
 
+    const handleSelectProduct = (product) => {
+        setCheckOut((prevCheckOut) => {
+            const existingProduct = prevCheckOut.find(item => item.productId === product.productId);
+            if (existingProduct) {
+                return prevCheckOut.filter((item) => item.productId !== product.productId);
+            } else {
+                return [...prevCheckOut, {...product, quantity: 1}];
+            }
+        });
+    };
+
+    const handleQuantityChange = (productId, change) => {
+        setCheckOut(prevCheckOut => 
+            prevCheckOut.map(item => 
+                item.productId === productId 
+                    ? {...item, quantity: Math.max(1, item.quantity + change)} 
+                    : item
+            )
+        );
+    };
+
+    const calculateTotal = () => {
+        return checkOut.reduce((total, item) => total + item.price * item.quantity, 0).toFixed(2);
+    };
+
     return (
-        <>
-            {/* Display All Product Data */}
-            <div className="content-container">
-                <div className="card-content-container">
-                    <div className="card-container">
-                        {products.map((p) => (
-                            <div key={p.productId} className="product-card">
-                                <img src={creeperHead} alt="a creeper head" />
-                                <h3 className='product-name'>{p.productName}</h3>
-                                <p>${p.price}</p>
-                            </div>
-                        ))}
-                    </div>
+        <div className="content-container">
+            <div className="card-content-container">
+                <div className="card-container">
+                    {products.map((p) => (
+                        <label 
+                            key={p.productId} 
+                            className="product-card" 
+                            htmlFor={`checkbox-${p.productId}`}
+                            onClick={() => handleSelectProduct(p)}
+                            style={{ cursor: 'pointer' }}
+                        >
+                            <img src={creeperHead} alt="a creeper head" />
+                            <h3 className='product-name'>{p.productName}</h3>
+                            <p>${p.price}</p>
+                            <input
+                                id={`checkbox-${p.productId}`}
+                                type="checkbox"
+                                checked={checkOut.some(item => item.productId === p.productId)}
+                                onChange={() => handleSelectProduct(p)}
+                                style={{ display: 'none' }}
+                            />
+                        </label>
+                    ))}
                 </div>
-
-               <CheckOutContainer />
-               
             </div>
+            <div className="checkOutContainer">
+                <h4 className='checkout-title'>Checkout</h4>
 
-          
+                {checkOut.length > 0 ?
+                (
+                    <>
+                        <table className="checkout-table">
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Price</th>
+                                    <th>Quantity</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {checkOut.map(item => (
+                                    <tr key={item.productId}>
+                                    
+                                        <td>{item.productName}</td>
+                                        <td>${item.price}</td>
+                                        <td style={{background: '', display: 'flex', justifyContent: 'space-around'}}>
+                                            <i class='bx bxs-minus-circle bx-quantity-icon' onClick={() => handleQuantityChange(item.productId, -1)} />
+                                            <span>{item.quantity}</span>
+                                            <i class='bx bxs-plus-circle bx-quantity-icon' onClick={() => handleQuantityChange(item.productId, 1)} />
+                                        </td>
+                                        <td className='trash-column'>
+                                            <i class='bx bxs-trash' onClick={() => handleSelectProduct(item)} style={{textAlign: 'center'}}></i>
+                                        </td>
+                                    
+                                    </tr>
+                                ))}
+                            </tbody>
+                        {/* <tfoot>
+                            <tr>
+                                <td colSpan="3"><strong>Total:</strong></td>
+                                <td>${calculateTotal()}</td>
+                            </tr>
+                            <tr>
+                                <button>Checkout</button>
+                            </tr>
+                        </tfoot> */}
+                    </table>
 
-           
-        </>
+                    <div className="foot">
+                        <div className="total-container">
+                            <h6 colSpan="3"><strong>Total:</strong></h6>
+                            <h6>${calculateTotal()}</h6>
+                        </div>
+                        <div className="checkout-btn-container">
+                            <button className='checkout-btn'>Checkout</button>
+                        </div>
+                    </div>
+                    </>
+                   
+
+                ) : (
+                    <table className="checkout-table">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Price</th>
+                                <th>Quantity</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                                <tr>
+                                
+                                    <td></td>
+                                    <td></td>
+                                    <td>
+                                    </td>
+                                    <td className='trash-column'>
+                                    </td>
+                                
+                                </tr>
+                        </tbody>
+                        <tfoot className='checkout-foot'>
+                            <tr>
+                                <td></td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                )}
+            </div>
+        </div>
     )
 }
 
