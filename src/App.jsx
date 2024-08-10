@@ -1,5 +1,6 @@
 import Categories from './Categories/CategoryIndex';
 import Products from './Products/ProductIndex';
+import Dashboard from './Dashboard/Dashboard';
 import Home from './Home/Home';
 import NavigationBar from './Navbar/Navbar';
 import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-dom';
@@ -33,10 +34,11 @@ const App = () => {
                             <Products />
                         </Route>
 
-                        {/* productsPage */}
-                        {/* <Route path='/products'>
-                            <Products />
-                        </Route> */}
+                        {/* dashboardPage */}
+                        <Route path="/dashboard">
+                            <Dashboard />
+                        </Route>
+                        
                     </Switch>
                 </div>
             </div>
