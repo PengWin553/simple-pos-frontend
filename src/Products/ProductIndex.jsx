@@ -23,9 +23,6 @@ const Products = () => {
     const [sku, setSku] = useState('');
     const [categoryId, setCategoryId] = useState('');
 
-    // authToken
-    var authToken = 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJhZG1pbiIsImp0aSI6IjUwZjg2NWU2LTVkMTQtNDczNi1iZjYzLTZiNzM3ZTUzNzc1NiIsImV4cCI6MTcyMzE5NDA2NSwiaXNzIjoiUGVuZ1dpbjU1MyIsImF1ZCI6ImVkaW9ucyJ9.39uwIOmLJ76Nm1veW_HTBNE2A-_VUxaM5xsjQHF1CRo';
-    
     // get Categories to display
     const [categories, setCategories] = useState([]);
 
@@ -47,11 +44,7 @@ const Products = () => {
     // Fetch Products
     const getProducts = async () => {
         const response = await fetch(
-            "http://localhost:5175/api/ProductApi/GetProducts", {
-                headers: {
-                    'Authorization' : authToken,
-                }
-            }
+            "http://localhost:5062/api/ProductApi/GetProducts"
         );
 
         const result = await response.json();
@@ -62,11 +55,7 @@ const Products = () => {
     // Fetch Categories
     const getCategories = async () => {
         const response = await fetch(
-            "http://localhost:5175/api/CategoryApi/GetCategories", {
-                headers: {
-                    'Authorization' : authToken,
-                }
-            }
+            "http://localhost:5062/api/CategoryApi/GetCategories"
         );
 
         const result = await response.json();
@@ -109,6 +98,9 @@ const Products = () => {
         setUnit(unit);
         setSku(sku);
         setCategoryId(categoryId);
+
+        console.log(productName);
+        console.log(sku);
     }
 
     // Add Product
@@ -123,15 +115,14 @@ const Products = () => {
         }
     
         const response = await fetch(
-            "http://localhost:5175/api/ProductApi/SaveProduct",
-            {
-                method: "POST",
+            "http://localhost:5062/api/ProductApi/SaveProduct", {
+                method: 'POST',
                 headers: {
-                    "Content-Type": "application/json",
-                    'Authorization': authToken,
+                    "Content-Type": "application/json"
                 },
                 body: JSON.stringify(dataToSend)
             }
+            
         );
     
         if (response.ok) {
@@ -156,12 +147,11 @@ const Products = () => {
         }
 
         const response = await fetch(
-            "http://localhost:5175/api/ProductApi/UpdateProduct?Id=" + productId,
+            "http://localhost:5062/api/ProductApi/UpdateProduct?Id=" + productId,
             {
                 method: "PUT",
                 headers: {
-                    "Content-Type": "application/json",
-                    'Authorization': authToken,
+                    "Content-Type": "application/json"
                 },
                 body: JSON.stringify(dataToSend)
             }
@@ -180,12 +170,9 @@ const Products = () => {
     // Delete Product
     const deleteProduct = async () => {
         const response = await fetch(
-            "http://localhost:5175/api/ProductApi/DeleteProduct?Id=" + productId,
+            "http://localhost:5062/api/ProductApi/DeleteProduct?Id=" + productId,
             {
                 method: "DELETE",
-                headers: {
-                    'Authorization': authToken,
-                }
             }
         );
 

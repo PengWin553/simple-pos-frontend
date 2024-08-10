@@ -34,9 +34,6 @@ const Categories = () => {
     const [showDeleteModal, setShowDeleteModal] = useState(false);
     const makeDeleteModalAppear = () => setShowDeleteModal(!showDeleteModal);
 
-    // authToken (expires every 30 minutes)
-    var authToken = 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJhZG1pbiIsImp0aSI6IjUwZjg2NWU2LTVkMTQtNDczNi1iZjYzLTZiNzM3ZTUzNzc1NiIsImV4cCI6MTcyMzE5NDA2NSwiaXNzIjoiUGVuZ1dpbjU1MyIsImF1ZCI6ImVkaW9ucyJ9.39uwIOmLJ76Nm1veW_HTBNE2A-_VUxaM5xsjQHF1CRo';
-
     const handleSelectedData = async (id, name) => {
         setCategoryId(id);
         setCategoryName(name);
@@ -45,11 +42,7 @@ const Categories = () => {
     // Fetch Categories
     const getCategories = async () => {
         const response = await fetch(
-            "http://localhost:5175/api/CategoryApi/GetCategories", {
-                headers: {
-                    'Authorization': authToken,
-                }
-            }
+            "http://localhost:5062/api/CategoryApi/GetCategories"
         );
         const result = await response.json();
         setCategories(result);
@@ -63,12 +56,11 @@ const Categories = () => {
         }
 
         const response = await fetch(
-            "http://localhost:5175/api/CategoryApi/SaveCategory",
+            "http://localhost:5062/api/CategoryApi/SaveCategory",
             {
                 method: "POST",
                 headers: {
-                    "Content-Type": "application/json",
-                    'Authorization': authToken,
+                    "Content-Type": "application/json"
                 },
                 body: JSON.stringify(dataToSend)
             }
@@ -91,12 +83,11 @@ const Categories = () => {
         }
 
         const response = await fetch(
-            "http://localhost:5175/api/CategoryApi/UpdateCategory?Id=" + categoryId,
+            "http://localhost:5062/api/CategoryApi/UpdateCategory?Id=" + categoryId,
             {
                 method: "PUT",
                 headers: {
-                    "Content-Type": "application/json",
-                    'Authorization': authToken,
+                    "Content-Type": "application/json"
                 },
                 body: JSON.stringify(dataToSend)
             }
@@ -115,12 +106,9 @@ const Categories = () => {
     // Delete Category
     const deleteCategory = async () => {
         const response = await fetch(
-            "http://localhost:5175/api/CategoryApi/DeleteCategory?Id=" + categoryId,
+            "http://localhost:5062/api/CategoryApi/DeleteCategory?Id=" + categoryId,
             {
                 method: "DELETE",
-                headers: {
-                    'Authorization': authToken,
-                }
             }
         );
 

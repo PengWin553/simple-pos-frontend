@@ -8,11 +8,13 @@ const ProductUpdateModal = ({
     price,
     stock,
     unit,
+    sku,
     categoryId,
     setProductName,
     setPrice,
     setStock,
     setUnit,
+    setSku,
     setCategoryId,
     categories,
     updateProduct
@@ -63,6 +65,14 @@ const ProductUpdateModal = ({
                     onChange={(e) => setUnit(e.target.value)}
                     id="unit"
                     placeholder='Enter unit'
+                />
+
+                <label htmlFor="sku">SKU:</label>
+                <input type="text"
+                    value={sku}
+                    onChange={(e) => setSku(e.target.value)}
+                    id="sku"
+                    placeholder='Enter SKU'
                 />
 
                 <label htmlFor="category">Category:</label>
