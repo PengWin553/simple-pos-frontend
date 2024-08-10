@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import creeperHead from '../assets/creeperhead.png';
 
 const Dashboard = () => {
 
@@ -18,42 +19,27 @@ const Dashboard = () => {
 
     // update browser in case of database updates
     useEffect(() => {
-       getProducts();
+        getProducts();
     }, []);
-    
-    return(
-      <>
-        {/* Display All Product Data */}
+
+    return (
+        <>
+            {/* Display All Product Data */}
             <div className="content-container">
-                <div className="table-container">
-                    <div className="fixTableHead">
-                        <table>
-                            <thead>
-                                <tr>
-                                    <th>Name</th>
-                                    <th>Price</th>
-                                    <th>Stock</th>
-                                    {/* <th className='action-btn-row-container'>Actions</th> */}
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {products.map((p) =>
-                                    <tr key={p.productId}>
-                                        <td>{p.productName}</td>
-                                        <td>{p.price}</td>
-                                        <td>{p.stock}</td>
-                                        <td className='action-btn-container-display'>
-                                            {/* <button className="action-btn row-btn update-client-btn" onClick={() => { handleSelectedData(p.productId, p.productName, p.price, p.stock, p.unit, p.sku, p.categoryId); makeUpdateModalAppear() }}>Update</button>
-                                            <button className="action-btn row-btn delete-client-btn" onClick={() => { handleSelectedData(p.productId, p.productName); makeDeleteModalAppear() }}>Delete</button> */}
-                                        </td>
-                                    </tr>
-                                )}
-                            </tbody>
-                        </table>
+                <div className="card-content-container">
+                    <div className="card-container">
+                        {products.map((p) => (
+                            <div key={p.productId} className="product-card">
+                                <img src={creeperHead} alt="a creeper head" />
+                                <h3 className='product-name'>{p.productName}</h3>
+                                <p>${p.price}</p>
+                            </div>
+                        ))}
                     </div>
                 </div>
             </div>
-      </>
+           
+        </>
     )
 }
 
