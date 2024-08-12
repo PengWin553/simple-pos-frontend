@@ -19,6 +19,11 @@ const ProductAddModal = ({
     saveProduct
 }) => {
 
+    function GenerateSKU() {
+      const genRandom = () => Math.floor(100 + Math.random() * 900);
+      setSku(`${genRandom()}-${genRandom()}-${genRandom()}`);
+    }
+
     return(
         <>
             {/* Add Product */}
@@ -66,6 +71,7 @@ const ProductAddModal = ({
                     id="sku"
                     placeholder='Enter sku'
                 />
+                <button onClick={GenerateSKU}>generate</button>
 
                 <label htmlFor="category">Category:</label>
                

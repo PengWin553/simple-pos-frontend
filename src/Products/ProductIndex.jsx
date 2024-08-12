@@ -9,6 +9,7 @@ import ProductUpdateModal from './ProductUpdateModal.jsx';
 
 // import ProductDeleteModal
 import ProductDeleteModal from './ProductDeleteModal.jsx';
+import API_BASE_URL from '../config.js';
 
 const Products = () => {
     // get Products to display
@@ -44,7 +45,8 @@ const Products = () => {
     // Fetch Products
     const getProducts = async () => {
         const response = await fetch(
-            "http://localhost:5062/api/ProductApi/GetProducts"
+            API_BASE_URL+
+            "/api/ProductApi/GetProducts"
         );
 
         const result = await response.json();
@@ -55,7 +57,8 @@ const Products = () => {
     // Fetch Categories
     const getCategories = async () => {
         const response = await fetch(
-            "http://localhost:5062/api/CategoryApi/GetCategories"
+            API_BASE_URL+
+            "/api/CategoryApi/GetCategories"
         );
 
         const result = await response.json();
@@ -115,7 +118,8 @@ const Products = () => {
         }
     
         const response = await fetch(
-            "http://localhost:5062/api/ProductApi/SaveProduct", {
+            API_BASE_URL+
+            "/api/ProductApi/SaveProduct", {
                 method: 'POST',
                 headers: {
                     "Content-Type": "application/json"
@@ -147,7 +151,8 @@ const Products = () => {
         }
 
         const response = await fetch(
-            "http://localhost:5062/api/ProductApi/UpdateProduct?Id=" + productId,
+            API_BASE_URL+
+            "/api/ProductApi/UpdateProduct?Id=" + productId,
             {
                 method: "PUT",
                 headers: {
@@ -170,7 +175,8 @@ const Products = () => {
     // Delete Product
     const deleteProduct = async () => {
         const response = await fetch(
-            "http://localhost:5062/api/ProductApi/DeleteProduct?Id=" + productId,
+            API_BASE_URL+
+            "/api/ProductApi/DeleteProduct?Id=" + productId,
             {
                 method: "DELETE",
             }

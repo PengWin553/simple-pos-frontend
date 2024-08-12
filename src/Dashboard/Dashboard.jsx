@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import creeperHead from '../assets/creeperhead.png';
 import 'boxicons';
+import API_BASE_URL from '../config';
 
 const Dashboard = () => {
     const [products, setProducts] = useState([]);
@@ -8,7 +9,8 @@ const Dashboard = () => {
 
     const getProducts = async () => {
         const response = await fetch(
-            "http://localhost:5062/api/ProductApi/GetProducts"
+            API_BASE_URL+
+            "/api/ProductApi/GetProducts"
         );
         const result = await response.json();
         setProducts(result);

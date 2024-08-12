@@ -9,6 +9,7 @@ import CategoryUpdateModal from './CategoryUpdateModal.jsx';
 
 // import CategoryDeleteModal
 import CategoryDeleteModal from './CategoryDeleteModal.jsx';
+import API_BASE_URL from '../config.js';
 
 const Categories = () => {
 
@@ -42,7 +43,8 @@ const Categories = () => {
     // Fetch Categories
     const getCategories = async () => {
         const response = await fetch(
-            "http://localhost:5062/api/CategoryApi/GetCategories"
+            API_BASE_URL+
+            "/api/CategoryApi/GetCategories"
         );
         const result = await response.json();
         setCategories(result);
@@ -56,7 +58,8 @@ const Categories = () => {
         }
 
         const response = await fetch(
-            "http://localhost:5062/api/CategoryApi/SaveCategory",
+            API_BASE_URL+
+            "/api/CategoryApi/SaveCategory",
             {
                 method: "POST",
                 headers: {
@@ -83,7 +86,8 @@ const Categories = () => {
         }
 
         const response = await fetch(
-            "http://localhost:5062/api/CategoryApi/UpdateCategory?Id=" + categoryId,
+            API_BASE_URL+
+            "/api/CategoryApi/UpdateCategory?Id=" + categoryId,
             {
                 method: "PUT",
                 headers: {
@@ -106,7 +110,8 @@ const Categories = () => {
     // Delete Category
     const deleteCategory = async () => {
         const response = await fetch(
-            "http://localhost:5062/api/CategoryApi/DeleteCategory?Id=" + categoryId,
+            API_BASE_URL+
+            "/api/CategoryApi/DeleteCategory?Id=" + categoryId,
             {
                 method: "DELETE",
             }
