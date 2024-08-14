@@ -3,6 +3,7 @@ import Products from './Products/ProductIndex';
 import Dashboard from './Dashboard/Dashboard';
 import Home from './Home/Home';
 import NavigationBar from './Navbar/Navbar';
+import Transactions from './Transaction/Transaction';
 import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-dom';
 
 const App = () => {
@@ -37,6 +38,10 @@ const App = () => {
                         {/* dashboardPage */}
                         <Route path="/dashboard">
                             <Dashboard />
+                        </Route>
+
+                        <Route path="/transactions">
+                            <Transactions />
                         </Route>
                         
                     </Switch>

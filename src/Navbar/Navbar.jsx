@@ -16,7 +16,7 @@ const NavigationBar = () => {
                 <Nav.Link href="/Categories/categories">Categories</Nav.Link>
                 <Nav.Link href="/Products/products">Products</Nav.Link>
                 <Nav.Link href="/Dashboard/dashboard">Dashboard</Nav.Link>
-                <Nav.Link href="/Dashboard/dashboard">Dashboard</Nav.Link>
+                <Nav.Link href="/transactions">Transactions</Nav.Link>
             </Nav>
         </Navbar.Collapse>
 
