@@ -1,3 +1,0 @@
-Type this in the terminal:
-
-npm i sonner
