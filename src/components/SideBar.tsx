@@ -1,4 +1,4 @@
-import { LuHome, LuPackage, LuTags } from "react-icons/lu";
+import { LuHistory, LuHome, LuPackage, LuTags } from "react-icons/lu";
 import { NavLink } from "react-router-dom";
 
 interface SideBarIconProps {
@@ -18,6 +18,9 @@ const SideBar = () => {
       </NavLink>
       <NavLink to={"/categories"}>
         <SideBarIcon icon={<LuTags size={32} />} text="Categories"/>
+      </NavLink>
+      <NavLink to={"/transactions"}>
+        <SideBarIcon icon={<LuHistory size={32} />} text="Transactions"/>
       </NavLink>
     </div>
   );
