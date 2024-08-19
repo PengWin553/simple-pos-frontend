@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { LuTrash } from "react-icons/lu";
+import { LuTrash, LuPackage } from "react-icons/lu";
 
 interface Product {
     productId: string;
@@ -98,8 +98,9 @@ const Home = () => {
                             htmlFor={`checkbox-${p.productId}`}
                             onClick={() => handleSelectProduct(p)}
                         >
-                            <img alt="a product" className="w-24 h-24 mb-4" />
+                            {/* <img alt="a product" className="w-24 h-24 mb-4" /> */}
                             <h3 className="text-lg font-semibold">{p.productName}</h3>
+                            <LuPackage size={48} />
                             <p className="text-lg font-semibold">${p.price}</p>
                             <input
                                 id={`checkbox-${p.productId}`}
